@@ -1,0 +1,38 @@
+POST http://localhost:3000/Books
+Content-Type: application/json
+
+{
+    "book_Name":"Twilight",
+    "book_Author":"abc xyz",
+    "book_Genre":["Action","Thriller","Fiction","Romantic"]
+}
+
+###
+
+POST http://localhost:3000/Books
+Content-Type: application/json
+
+{
+    "book_Name":"Twisted Love",
+    "book_Author":"xyz abc",
+    "book_Genre":["Romantic","Tragedy"]
+}
+###
+
+POST http://localhost:3000/Books
+Content-Type: application/json
+
+{
+    "book_Name":"Rich Dad Poor Dad",
+    "book_Author":"abc def",
+    "book_Genre":["Finances"]
+}
+###
+
+POST http://localhost:3000/Books
+Content-Type: application/json
+
+{
+    "book_Name":"Twisted Love",
+    "book_Genre":["Romantic","Tragedy"]
+}
