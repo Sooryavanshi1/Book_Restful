@@ -36,3 +36,15 @@ Content-Type: application/json
     "book_Name":"Twisted Love",
     "book_Genre":["Romantic","Tragedy"]
 }
+
+###
+
+GET http://localhost:3000/Books
+
+###
+
+GET http://localhost:3000/Books/genre?book_Genre=Romantic
+
+###
+
+GET http://localhost:3000/Books/64dd01c381242b358ce72afa

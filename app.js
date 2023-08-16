@@ -5,7 +5,7 @@ const app = express();
 
 //parsing happens before initializing database
 app.use(express.json());
-
+// app.use(express.urlencoded({extended:true}))
 require('./initialize.Database')()
 
 app.use("/Books",BookRoute)
