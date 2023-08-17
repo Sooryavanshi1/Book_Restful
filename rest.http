@@ -57,3 +57,12 @@ Content-Type: application/json
 {
     "book_Genre":"Horror"
 }
+
+###
+
+PATCH http://localhost:3000/Books?old_Genre=Romantic
+Content-Type: application/json
+
+{
+    "book_Genre":"Rom-Com"
+}

@@ -59,6 +59,10 @@ module.exports={
             const id = req.params.id;
             const updates = req.body.book_Genre;
             const options = {new:true};
+            const book = await Book.findById(id);
+            if(book.book_Genre.includes(updates)){
+                throw (createError(401,"Genre Already Present"))
+            }
             const result = await Book.findByIdAndUpdate(id,{$push:{book_Genre:updates}},options);
             if(!result){
                 throw (createError(404,"No Book Found"));
@@ -67,6 +71,32 @@ module.exports={
         }catch(error){
             next(error);
         }
-
+    },
+    updateGenreOfAll:async(req,res,next)=>{
+        try{
+            const oldGenre = req.query.old_Genre;
+            const newGenre = req.body.book_Genre;
+            const options = {new:true};
+            const check = await Book.find({book_Genre:{$in:[oldGenre]}});
+            if(check.length===0){
+                throw(createError(404,"No book by this Genre"));
+            }
+            const pullUpdateResult = await Book.updateMany(
+                { book_Genre: { $in: [oldGenre] } },
+                { $push: { book_Genre: newGenre } },
+                options
+            );
+        
+            // Update by pushing the new genre
+            const pushUpdateResult = await Book.updateMany(
+                { book_Genre: { $in: [oldGenre] } }, // Use oldGenre in the query
+                { $pull: { book_Genre: oldGenre } },
+                options
+            );
+           const books = await Book.find({book_Genre:{$in:[newGenre]}});
+            res.send(books);
+        }catch(error){
+            next(error);
+        }
     }
 }
