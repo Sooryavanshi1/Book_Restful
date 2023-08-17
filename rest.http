@@ -47,7 +47,7 @@ GET http://localhost:3000/Books/genre?book_Genre=Romantic
 
 ###
 
-GET http://localhost:3000/Books/64dd01c381242b358ce72afa
+GET http://localhost:3000/Books/64dd01c381242b358ce72af
 
 ###
 
@@ -66,3 +66,7 @@ Content-Type: application/json
 {
     "book_Genre":"Rom-Com"
 }
+
+###
+
+DELETE http://localhost:3000/Books/64dd01c381242b358ce72af

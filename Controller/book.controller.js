@@ -42,15 +42,17 @@ module.exports={
     getBookById:async(req,res,next)=>{
         try{
             const id = req.params.id;
-            if(id instanceof mongoose.CastError){
-                throw(createError(400,"Invalid Id"));
-            }
+           
             const book = await Book.findById(id);
             if(!book){
                 throw (createError(404,"no book by this Id"));
             }
             res.send(book);
         }catch(error){
+            if(error instanceof mongoose.CastError){
+                next(createError(400,"Invalid Id"));
+                return;
+            }
             next(error);
         }
     },
@@ -69,6 +71,9 @@ module.exports={
             }
             res.send(result)
         }catch(error){
+            if(error instanceof mongoose.CastError){
+                next(createError(400,"Inavlid Id"));
+            }
             next(error);
         }
     },
@@ -81,14 +86,14 @@ module.exports={
             if(check.length===0){
                 throw(createError(404,"No book by this Genre"));
             }
-            const pullUpdateResult = await Book.updateMany(
+            const pushUpdateResult = await Book.updateMany(
                 { book_Genre: { $in: [oldGenre] } },
                 { $push: { book_Genre: newGenre } },
                 options
             );
         
             // Update by pushing the new genre
-            const pushUpdateResult = await Book.updateMany(
+            const pullUpdateResult = await Book.updateMany(
                 { book_Genre: { $in: [oldGenre] } }, // Use oldGenre in the query
                 { $pull: { book_Genre: oldGenre } },
                 options
@@ -97,6 +102,22 @@ module.exports={
             res.send(books);
         }catch(error){
             next(error);
+        }
+    },
+    deleteABook:async(req,res,next)=>{
+        try{
+            const id = req.params.id;
+           
+            const result = await Book.findByIdAndDelete(id);
+            if(!result){
+                throw(createError(404,"No book by this Id"));
+            }
+            res.send(result);
+        }catch(error){
+            if(error instanceof mongoose.CastError){
+                next(createError(400,'Inavlid Id'));
+            }
+            next(error)
         }
     }
 }
