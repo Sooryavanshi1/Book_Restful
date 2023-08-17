@@ -48,3 +48,12 @@ GET http://localhost:3000/Books/genre?book_Genre=Romantic
 ###
 
 GET http://localhost:3000/Books/64dd01c381242b358ce72afa
+
+###
+
+PATCH http://localhost:3000/Books/64dd01c381242b358ce72afa
+Content-Type: application/json
+
+{
+    "book_Genre":"Horror"
+}

@@ -53,5 +53,20 @@ module.exports={
         }catch(error){
             next(error);
         }
+    },
+    updateAbooksGenreById:async(req,res,next)=>{
+        try{
+            const id = req.params.id;
+            const updates = req.body.book_Genre;
+            const options = {new:true};
+            const result = await Book.findByIdAndUpdate(id,{$push:{book_Genre:updates}},options);
+            if(!result){
+                throw (createError(404,"No Book Found"));
+            }
+            res.send(result)
+        }catch(error){
+            next(error);
+        }
+
     }
 }
